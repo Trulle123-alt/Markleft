@@ -3,7 +3,8 @@
 ## Markleft
 - Markleft is a Markdown like markup language.
 - The syntax is just what I think works best.
-- See [https://github.com/Trulle1234/Markleft/blob/main/showcase.markl](showcase.markl) for syntax.
+- See [https://github.com/Trulle1234/Markleft/blob/main/showcase.markl](Markleft/showcase.markl) for syntax.
+- And [https://trulle1234.github.io/Markleft/](trulle1234.github.io/Markleft) for renderd example.
 
 ---
 /AI notice: AI was used for parts of the code (for example some of the complex regex)/
