@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <head>
-  <title>Markdown</title>
+  <title>Markleft</title>
 </head>
 
 <div id="content">loading...</div>
 
 <script type="module">
-  import { parseMarkdown } from "./markdown-parser.js";
+  import { parseMarkdown } from "./markleft-parser.js";
 
-  fetch("text.txt")
+  fetch("showcase.markl")
     .then((response) => {
       if (!response.ok) {
         throw new Error("could not load file");
