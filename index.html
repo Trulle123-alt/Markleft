@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+  <title>Markdown</title>
+</head>
+
+<div id="content">loading...</div>
+
+<script type="module">
+  import { parseMarkdown } from "./markdown-parser.js";
+
+  fetch("text.txt")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("could not load file");
+      }
+
+      return response.text();
+    })
+    .then((markdown) => {
+      const html = parseMarkdown(markdown);
+
+      document.getElementById("content").innerHTML = html;
+    })
+    .catch((error) => {
+      document.getElementById("content").textContent = error.message;
+    });
+</script>
