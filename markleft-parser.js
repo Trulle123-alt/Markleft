@@ -12,7 +12,7 @@ export function parseMarkdown(markdown) {
   return markdown
 
     // code
-    .replace(/%(.*?)%/gims, (_, code) => {
+    .replace(/%<(.*?)>%/gims, (_, code) => {
       return `<pre><code>${escapeHtml(code)}</code></pre>`;})  
       
     // escaping
@@ -57,7 +57,9 @@ export function parseMarkdown(markdown) {
           .replace(/(^|[\s>])=([^=\n]+?)=(?=\s|$|[<.,!?;:])/gim, "$1<mark>$2</mark>")
 
           .replace(/(^|[\s>])~([^~\s\n][^~\n]*?)~(?=\s|$|[<.,!?;:])/gim, "$1<sub>$2</sub>")
-          .replace(/(^|[\s>])\^([^^\s\n][^^\n]*?)\^(?=\s|$|[<.,!?;:])/gim, "$1<sup>$2</sup>");
+          .replace(/(^|[\s>])\^([^^\s\n][^^\n]*?)\^(?=\s|$|[<.,!?;:])/gim, "$1<sup>$2</sup>")
+
+          .replace(/(^|[\s>])%([^%\s\n][^%\n]*?)%(?=\s|$|[<.,!?;:])/gim, "$1<code>$2</code>");
       } while (text !== previous);
 
       return text;})

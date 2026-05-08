@@ -32,12 +32,14 @@ Sub ~script~
 
 ---
 
-%<!DOCTYPE html>
+%<<!DOCTYPE html>
 <body>
     <p>Code block</p>
     <br>
     <p>Code block</p>
-</body>%
+</body>>%
+
+inline %code%
 
 ---
 
