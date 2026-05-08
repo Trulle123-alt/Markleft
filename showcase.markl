@@ -2,9 +2,9 @@
 ## Heading
 ### Heading
 #### Heading
-##### Heading
+##### Headings
 ###### Heading
-
+## Heading with ID {#heading-id}
 ---
 
 Paragraph
@@ -19,6 +19,12 @@ Sper ^script^
 Sub ~script~
 
 ---
+
+\-_Escaping with "\"_-
+
+---
+
+[#in-page-link](In Page Link)
 
 [https://hackclub.com/](Link)
 
@@ -52,4 +58,7 @@ Sub ~script~
 ---
 
 <div style="color:red;">HTML gets through</div>
+---
+
+### In page link example {#in-page-link}
 ---
