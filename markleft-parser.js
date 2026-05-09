@@ -14,7 +14,7 @@ export function parseMarkdown(markdown) {
   let html = markdown
 
     // code block
-    .replace(/%<([\s\S]*?)>%/g, (_, code) => {
+    .replace(/%\[([\s\S]*?)\]%/g, (_, code) => {
       const index = codeBlocks.length;
       codeBlocks.push(`<pre><code>${escapeHtml(code)}</code></pre>`);
       return `\uE100${index}\uE101`;})
@@ -25,6 +25,9 @@ export function parseMarkdown(markdown) {
 
     // line
     .replace(/^---(.*$)/gim, "<hr>")
+
+    // blankline
+    .replace(/^\.\s*$/gim, "<br>")
 
     // image
     .replace(/\#\[([^\]]+)\]\(([^)]+)\)/gim, '<img src="$1" alt="$2">')
@@ -106,7 +109,7 @@ export function parseMarkdown(markdown) {
 
     // restore code blocks
     .replace(/\uE100(\d+)\uE101/g, (_, index) => {
-      return codeBlocks[Number(index)];});
+      return codeBlocks[Number(index)];})
 
     return html;
 }
