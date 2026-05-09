@@ -9,11 +9,15 @@ function escapeHtml(text) {
 }
 
 export function parseMarkdown(markdown) {
-  return markdown
+  const codeBlocks = [];
 
-    // code
-    .replace(/%<(.*?)>%/gims, (_, code) => {
-      return `<pre><code>${escapeHtml(code)}</code></pre>`;})  
+  let html = markdown
+
+    // code block
+    .replace(/%<([\s\S]*?)>%/g, (_, code) => {
+      const index = codeBlocks.length;
+      codeBlocks.push(`<pre><code>${escapeHtml(code)}</code></pre>`);
+      return `\uE100${index}\uE101`;})
       
     // escaping
     .replace(/\\([\\*\/_\-=~^#[\]()!>%])/gim, (_, char) => {
@@ -52,14 +56,15 @@ export function parseMarkdown(markdown) {
           .replace(/(^|[\s>])\*([^*\n]+?)\*(?=\s|$|[<.,!?;:])/gim, "$1<strong>$2</strong>")
           .replace(/(^|[\s>])\/([^/\n]+?)\/(?=\s|$|[<.,!?;:])/gim, "$1<em>$2</em>")
           .replace(/(^|[\s>])_([^_\n]+?)_(?=\s|$|[<.,!?;:])/gim, "$1<u>$2</u>")
-          .replace(/(^|[\s>])\-([^- \n][^-\n]*?)\-(?=\s|$|[<.,!?;:])/gim, "$1<s>$2</s>")
+          .replace(/(^|[\s>])\-([^- \n][^-\n]*?)\-(?=\s|$|[<.,!?;:])/gim, "$1<del>$2</del>")
 
           .replace(/(^|[\s>])=([^=\n]+?)=(?=\s|$|[<.,!?;:])/gim, "$1<mark>$2</mark>")
 
           .replace(/(^|[\s>])~([^~\s\n][^~\n]*?)~(?=\s|$|[<.,!?;:])/gim, "$1<sub>$2</sub>")
           .replace(/(^|[\s>])\^([^^\s\n][^^\n]*?)\^(?=\s|$|[<.,!?;:])/gim, "$1<sup>$2</sup>")
 
-          .replace(/(^|[\s>])%([^%\s\n][^%\n]*?)%(?=\s|$|[<.,!?;:])/gim, "$1<code>$2</code>");
+          .replace(/(^|[\s>])%([^%\s\n][^%\n]*?)%(?=\s|$|[<.,!?;:])/gim, (_, before, code) => {
+            return `${before}<code>${escapeHtml(code)}</code>`;});
       } while (text !== previous);
 
       return text;})
@@ -71,6 +76,7 @@ export function parseMarkdown(markdown) {
         .split(/\r?\n/)
         .map((line) => line.replace(/^> ?/, ""))
         .join("<br>");
+
       return `<blockquote>${content}</blockquote>`;})
       
     // lists
@@ -92,13 +98,15 @@ export function parseMarkdown(markdown) {
         .join("");
       return `<ul>${content}</ul>`;})
     
+    // paragraphs
+    .replace(/^(?!<(h[1-6]|hr|ul|ol|li|blockquote|pre|img|code|pre)\b)(.+)$/gim, "<p>$2</p>")
+
     // unescape
     .replace(/\uE000(.?)\uE001/gim, "$1")
-    
-    // newline
-    .split(/\r?\n/)
-    .map((line) => {
-      const isBlockElement = /^<(h[1-6]|hr)(\s[^>]*)?>/.test(line);
-      return isBlockElement ? line : `${line}<br>`;
-    }).join("");
+
+    // restore code blocks
+    .replace(/\uE100(\d+)\uE101/g, (_, index) => {
+      return codeBlocks[Number(index)];});
+
+    return html;
 }
