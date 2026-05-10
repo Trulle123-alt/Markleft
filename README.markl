@@ -1,10 +1,20 @@
 /^This will not render properly on GitHub as I'm using the syntax of Markleft.^/
 ---
-## Markleft
-- Markleft is a Markdown like markup language.
+
+# Markleft
+- Markleft is a Markdown-like markup language.
 - The syntax is just what I think works best.
 - See [https://github.com/Trulle1234/Markleft/blob/main/showcase.markl](Markleft/showcase.markl) for syntax.
-- And [https://trulle1234.github.io/Markleft/](trulle1234.github.io/Markleft) for renderd example.
+- And [https://trulle1234.github.io/Markleft/](trulle1234.github.io/Markleft) for a rendered example.
 
+## Usage
+*Either put the file in your project*
+(A setup similar to mine)
+
+*Or use jsDelivr*
+Like this: %import { parseMarkdown } from "https://cdn.jsdelivr.net/gh/Trulle1234/Markleft@main/markleft-parser.js";%
+/:warning: This will most likely be very slow/
+
+.
 ---
-/AI notice: AI was used for parts of the code (for example some of the complex regex)/
+/AI notice: AI was used for parts of the code (for example, some of the complex regex)/
